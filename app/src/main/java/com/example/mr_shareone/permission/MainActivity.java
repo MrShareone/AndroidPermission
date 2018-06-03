@@ -2,21 +2,31 @@ package com.example.mr_shareone.permission;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    @BindView(R.id.go_test_easypermission)
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(getApplicationContext(),checkPermission(getApplicationContext()," ")?"yes":"no",Toast.LENGTH_LONG).show();
+        ButterKnife.bind(this);
+
+        Toast.makeText(getApplicationContext(),checkPermission(getApplicationContext(),"")?"yes":"no",Toast.LENGTH_LONG).show();
         // Here, thisActivity is the current activity
         //这里，thisActivity表示的是当前所在activity
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -46,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
                 //MY_PERMISSIONS_REQUEST_READ_CONTACTS是自定义的全局变量，用来标识自己发出的权限请求，并在onRequestPermissionsResult中做出相应的回应
             }
         }
+    }
+    @OnClick(R.id.go_test_easypermission)
+    public void goTestEasyPermission(){
+        startActivity(new Intent(this,TestEasyPermission.class));
     }
 
     @Override
